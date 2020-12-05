@@ -24,6 +24,7 @@ import net.wejudge.utils.Requests;
 
 import java.io.IOException;
 import java.lang.String;
+import java.math.BigDecimal;
 import java.net.URL;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -95,7 +96,9 @@ public class ListenController implements Initializable {
                                 String.valueOf(((JSONObject) data1).get("nickname")),
                                 String.valueOf(((JSONObject) data1).get("username")));
                         String problem = String.valueOf(((JSONObject) data1).get("problem"));
-                        String judgeTime = DateFormat.getFormatTime(Long.parseLong(String.valueOf(((JSONObject) data1).get("create_time")).replaceAll("\\.", "")) / 100);
+                        BigDecimal xxx = (BigDecimal)((JSONObject) data1).get("create_time");
+
+                        String judgeTime = DateFormat.getFormatTime(xxx.multiply(new BigDecimal(1000)).longValue());
                         Button print = new Button("打印");
                         Status a = new Status(jid, nickname, problem, judgeTime, "未打印", print);
                         print.setOnAction(new EventHandler<ActionEvent>() {
